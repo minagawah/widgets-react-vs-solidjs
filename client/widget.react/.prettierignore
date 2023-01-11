@@ -1,0 +1,8 @@
+/node_modules
+.prettierignore
+.prettierrc.js
+package-lock.json
+*.png
+*.log
+*.lock
+stats.json

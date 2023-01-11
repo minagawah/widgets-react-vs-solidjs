@@ -1,0 +1,26 @@
+{
+  "name": "server-for-widgets-react-vs-solidjs",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Compare widgets implemented in React and SolidJS.",
+  "scripts": {
+    "prettier": "prettier --write \"*.{js,md,json}\" \"**/*.{css,html,js}\"",
+    "build:css": "postcss styles --dir public/css",
+    "watch:css": "nodemon -x $npm_execpath run build:css -e css,html -w styles -w public",
+    "watch:www": "http-server public -a localhost --port 3000 --cors",
+    "watch": "concurrently \"$npm_execpath run watch:css\" \"$npm_execpath run watch:www\""
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "http-server": "^14.1.1",
+    "nodemon": "^2.0.20",
+    "postcss-cli": "^10.1.0",
+    "postcss-preset-env": "^7.8.3",
+    "prettier": "^2.8.2"
+  }
+}

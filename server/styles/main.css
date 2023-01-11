@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap');
+
+:root {
+  --text-sans-worksans: 'Work Sans',
+    /*
+                  * "-apple-system" targets San Francisco
+                  * in Safari on Mac OS X and iOS, and
+                  * Neue Helvetica and Lucida Grande on older
+                  * versions of Mac OS X. It properly selects
+                  * between San Francisco Text
+                  * and San Francisco Display.
+                  */ -apple-system,
+    /* For Chrome on Mac OS X */ BlinkMacSystemFont,
+    /* Microsoft Windows and Windows Phone */ 'Segoe UI', /* Android */ 'Roboto',
+    /* KDE */ 'Oxygen', 'Ubuntu', /* Fedora */ 'Cantarell',
+    /* FirefoxOS */ 'Fira Sans', /* Android 2 */ 'Droid Sans',
+    /* MacOS 2 */ 'Helvetica Neue', sans-serif;
+  --text-sans-serif: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial,
+    sans-serif;
+  --text-serif: Times, 'Times New Roman', serif;
+}
+
+.font-custom-sans {
+  font-family: var(--text-sans-worksans);
+}
+
+.font-custom-serif {
+  font-family: var(--text-serif);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: fit-content;
+  width: 100%;
+  position: absolute; /* Body is not 100% without it. Not sure why. */
+  font-family: var(--text-sans-worksans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.05rem;
+  background-color: #2b2b2b; /* bg-gray-800 */
+}
+
+* {
+  /* Otherwise, can't have padding for footer (it will push the width outward) */
+  box-sizing: border-box;
+  line-height: 1.2;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h1 {
+  margin-block-start: 0.3em; /* 0.67em */
+  margin-block-end: 0.3em; /* 0.67em */
+}
+
+h2 {
+  margin-block-start: 0.3em; /* 0.83em */
+  margin-block-end: 0.3em; /* 0.83em */
+}
+
+h3 {
+  margin-block-start: 0.3em; /* 1em */
+  margin-block-end: 0.3em; /* 1em */
+}
+
+p,
+li {
+  line-height: 130%;
+}
+
+p {
+  margin-block-start: 0.2em;
+  margin-block-end: 0.8em;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: #dc2626;
+  text-decoration: underline;
+}
+
+.button {
+  @apply block px-5 py-2 rounded-lg cursor-pointer border-0 drop-shadow-2xl text-center font-bold text-lg bg-gray-200;
+}
+
+.input {
+  @apply px-2 py-2 rounded border border-solid border-gray-300 shadow-inner drop-shadow-2xl text-xl;
+}
+
+.generic-content-wrapper {
+  width: 94%;
+  @media (min-width: 768px) {
+    width: 85%;
+    max-width: 1024px;
+  }
+}

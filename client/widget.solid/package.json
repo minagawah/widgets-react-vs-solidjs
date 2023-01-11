@@ -1,0 +1,68 @@
+{
+  "name": "solidjs-widgets-for-widgets-react-vs-solidjs",
+  "version": "1.0.0",
+  "private": false,
+  "description": "SolidJS widgets for 'widgets-react-vs-solidjs'",
+  "main": "src/widget/init.jsx",
+  "scripts": {
+    "prettier": "prettier --write \"*.{js,md,json}\" \"src/**/*.{css,html,js,jsx}\"",
+    "clean": "rimraf \"../../server/public/build/widget.solid.*.{js,map,txt}\"",
+    "build:dev": "$npm_execpath run clean && webpack --config webpack.dev.js --progress",
+    "watch:dev": "nodemon -x $npm_execpath run build:dev -e js,jsx,css -w '*.js' -w src",
+    "build:release": "$npm_execpath run clean && webpack --config webpack.prod.js --progress",
+    "webpack:stats": "$npm_execpath run clean && webpack --config webpack.prod.js --json > stats.json",
+    "webpack:analyze": "webpack-bundle-analyzer stats.json"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@emotion/css": "^11.10.5",
+    "axios": "^1.2.2",
+    "core-js": "^3.27.1",
+    "js-cookie": "^3.0.1",
+    "moment": "^2.29.4",
+    "ramda": "^0.28.0",
+    "sanitize-html": "^2.8.1",
+    "solid-element": "^1.6.3",
+    "solid-js": "^1.6.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "@svgr/webpack": "^6.5.1",
+    "autoprefixer": "^10.4.13",
+    "babel-loader": "^9.1.0",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-preval": "^5.1.0",
+    "babel-preset-solid": "^1.6.6",
+    "css-loader": "^6.7.3",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "license-webpack-plugin": "^4.0.2",
+    "mini-css-extract-plugin": "^2.7.2",
+    "nodemon": "^2.0.20",
+    "postcss-loader": "^7.0.2",
+    "prettier": "^2.8.1",
+    "raw-loader": "^4.0.2",
+    "regenerator-runtime": "^0.13.11",
+    "rimraf": "^3.0.2",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.2.4",
+    "twin.macro": "^3.1.0",
+    "webpack": "^5.75.0",
+    "webpack-bundle-analyzer": "^4.7.0",
+    "webpack-cli": "^5.0.1",
+    "worker-loader": "^3.0.8"
+  }
+}

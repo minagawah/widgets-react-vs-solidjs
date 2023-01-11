@@ -1,0 +1,9 @@
+.env*
+.prettierignore
+/bin
+/node_modules
+/public
+/worker
+package-lock.json
+*.log
+*.lock

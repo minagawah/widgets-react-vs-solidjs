@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>SolidJS - widgets-react-vs-solidjs</title>
+  </head>
+
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but the app doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong
+      >
+    </noscript>
+
+    <!--
+         On Saturday, October 26, 1985, 1:35 AM,
+         Marty McFly goes back in time, and
+         arrives at the future Peabody Farm
+         on Saturday, November 5, 1955, 6:15 am.
+    -->
+    <header-widget
+      id="header"
+      data-datetime="1985-10-26 01:35:00"
+      class="w-full"
+      ></header-widget
+    >
+
+    <breadcrumbs-widget
+      id="breadcrumbs"
+      data-breadcrumbs='[{ "text": "Home", "link": "./index.html" }, { "text": "Widgets (SolidJS)" }]'
+      class="w-full"
+    ></breadcrumbs-widget>
+
+    <div
+      id="container"
+      class="w-full flex flex-col justify-start items-center bg-gray-200"
+    >
+      <div
+        id="content"
+        class="generic-content-wrapper flex flex-col justify-start items-start px-4 pt-4 pb-16 font-serif text-xl"
+      >
+        <translate-widget data-lang-ja="(Solid) ファウスト「悲壮劇の第一部」" class="mt-4 font-bold text-5xl">(Solid) FAUST "FIRST PART OF THE TRAGEDY"</translate-widget>
+
+        <div class="text-gray-500 text-2xl">
+          (Try having <span class="font-bold text-red-400">View-Source</span> on this page)
+        </div>
+
+        <translate-widget data-lang-ja="はてさて、己は哲学も法学も医学もあらずもがなの神学も熱心に勉強して、底の底まで研究した。そうしてここにこうしている。気の毒な、馬鹿な己だな。そのくせなんにもしなかった昔より、ちっともえらくはなっていない。マギステルでござるの、ドクトルでござるのと学位倒れで、もう彼此十年が間、弔り上げたり、引き卸したり、竪横十文字に、学生どもの鼻柱を撮まんで引き廻している。そして己達に何も知れるものでないと、己は見ているのだ。それを思えば、ほとんどこの胸が焦げそうだ。" class="mt-4">
+I've studied now Philosophy
+And Jurisprudence, Medicine,
+And even, alas! Theology,
+From end to end, with labor keen;
+And here, poor fool! with all my lore
+I stand, no wiser than before:
+I'm Magister—yea, Doctor—hight,
+And straight or cross-wise, wrong or right,
+These ten years long, with many woes,
+I've led my scholars by the nose,
+And see, that nothing can be known!
+That knowledge cuts me to the bone.
+        </translate-widget>
+
+        <translate-widget data-lang-ja="勿論世間でドクトルだ、マギステルだ、学者だ、牧師だと云う、一切の馬鹿者どもに較べれば、己の方が気は利いている。己は疑惑に悩まされるようなことはない。地獄も悪魔もこわくはない。その代り己には一切の歓喜がなくなった。" class="mt-4">
+I'm cleverer, true, than those fops of teachers,
+Doctors and Magisters, Scribes and Preachers;
+Neither scruples nor doubts come now to smite me,
+Nor Hell nor Devil can longer affright me.
+For this, all pleasure am I foregoing;
+        </translate-widget>
+
+        <translate-widget data-lang-ja="一廉の事を知っていると云う自惚もなく、人間を改良するように、済度するように、教えることが出来ようと云う自惚もない。それに己は金も品物も持っていず、世間の栄華や名聞も持っていない。この上こうしていろと云ったら、狗もかぶりを振るだろう。それで霊の威力や啓示で、いくらか秘密が己に分かろうかと思って、己は魔法に這入った。その秘密が分かったら、辛酸の汗を流して、うぬが知らぬ事を人に言わいでも済もうと思ったのだ。一体この世界を奥の奥で統べているのは何か。それが知りたい。そこで働いている一切の力、一切の種子は何か。それが見たい。それを知って、それを見たら、無用の舌を弄せないでも済もうと思ったのだ。" class="mt-4">
+I do not pretend to aught worth knowing,
+I do not pretend I could be a teacher
+To help or convert a fellow-creature.
+Then, too, I've neither lands nor gold,
+Nor the world's least pomp or honor hold—
+No dog would endure such a curst existence!
+Wherefore, from Magic I seek assistance,
+That many a secret perchance I reach
+Through spirit-power and spirit-speech,
+And thus the bitter task forego
+Of saying the things I do not know,—
+That I may detect the inmost force
+Which binds the world, and guides its course;
+Its germs, productive powers explore,
+And rummage in empty words no more!
+        </translate-widget>
+      </div>
+    </div>
+
+    <footer-widget id="footer" class="w-full"></footer-widget>
+
+    <script src="build/widget.solid.runtime.js"></script>
+    <script src="build/widget.solid.vendor.js"></script>
+    <script src="build/widget.solid.init.js"></script>
+    <script src="build/widget.solid.header.js"></script>
+    <script src="build/widget.solid.translate.js"></script>
+    <script src="build/widget.solid.breadcrumbs.js"></script>
+    <script src="build/widget.solid.footer.js"></script>
+  </body>
+</html>

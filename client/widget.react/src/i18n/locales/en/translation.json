@@ -1,0 +1,12 @@
+{
+  "site": {
+    "name": "astralscience",
+    "domain": "astralscience.com"
+  },
+  "title": "Astralscience",
+  "organization": "Astralscience",
+  "title": {
+    "home": "Home",
+    "about": "About"
+  }
+}

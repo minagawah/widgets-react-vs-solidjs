@@ -1,0 +1,21 @@
+{
+  "name": "widgets-react-vs-solidjs",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Compare widgets implemented in React and SolidJS.",
+  "main": "server/public/index.html",
+  "repository": "https://github.com/minagawah/widgets-react-vs-solidjs.git",
+  "keywords": [
+    "widgets",
+    "React",
+    "SolidJS",
+    "Web Components",
+    "Emotion CSS",
+    "Tailwind CSS"
+  ],
+  "author": "minagawah <minag@tokyo800.jp>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/minagawah/widgets-react-vs-solidjs/issues"
+  }
+}
