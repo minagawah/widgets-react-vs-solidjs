@@ -18,21 +18,21 @@ probbly because the sample widgets are relatively small.
 You may also notice it takes time for initial startup,
 but that's what happens when using JS frameworks.
 After finished with these samples,
-I thought about writing them without any JS frameworks.
-It could become much faster.
+I thought of writing them without any JS frameworks.
+It could become much faster.  
 Give me your thoughts on this.
 
-You may also notice the page appears to be shakey;
+You may also notice the page is a bit shakey;
 for widgets appear after about 1 second.
-This is due to the widgets replacing DOMs when ready, giving height to each element.
-It could improved if I combined some widgets into 1 widget
-(then it would be no different from ordinary SPA though).
+This is due to the widgets replacing DOM elements, giving height for each element.
+I could have improved if I combined several widgets into 1
+(then, it would be no different from ordinary SPA...).
 Or, I could apply some transition animations.
 
 ## 2. Settings
 
 As I mentioned, it is more about using Emotion CSS and Tailwind CSS.  
-Enjoy the content, or hope it helps someone with similar issues.
+Enjoy the content, or hope it helps someone out there!
 
 - [Client (Widgets in SolidJS)](client/widget.solid/)
 - [Client (Widgets in React)](client/widget.react/)

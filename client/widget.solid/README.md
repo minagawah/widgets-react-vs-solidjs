@@ -16,17 +16,17 @@ npm install
 
 SolidJS is a bit tricky compared to React.
 In React, you need to pay attentions to what to specify for dependencies.
-Whereas in SolidJS, dependencies are pretty much taken care automatically,
-yet, you need to specify _behaviors_ for how you want
+Whereas in SolidJS, dependencies are pretty much taken care automatically.
+Yet, you need to specify _behaviors_ for how you want
 your stored values to be reactive.  
-Anyways, hope the following helps someone.
+Anyways. Hope the following contents will help you out there.
 
 ### Watch Out for Destructure!
 
 While the official documentations mention in many occasions,
 it is worth mentioning to watch out for _destructure_.
 When you receive props from parent components,
-make sure **_NOT_** to _destructure_ the props.
+make sure _NOT_ to _destructure_ the props.
 In SolidJS, it will lose reactivity when you do that.
 
 ### CSS-in-JS for Web Components
@@ -36,13 +36,13 @@ For the given samples, I use
 and [Tailwind CSS](https://tailwindcss.com/docs/installation).
 Because I made them Web Components,
 a _Shadow Root_ is created for each widget when visiting the page.
-And, this is very important; when widgets are within _Shadow Roots_,
-they can _NOT_ look up globally defined CSS styles...
+And (this is very important) when widgets are within _Shadow Roots_,
+they can _NOT_ look up globally defined CSS styles!
 For any CSS-in-JS solutions usually inject styles globally,
-however, for widgets in Shadow Roots can _NOT_ look up the definitions...
+however, for widgets in _Shadow Roots_ can _NOT_ look up the definitions...
 
-For Emotion CSS has a way to create a local instance.
-So, I have a some voodoo tricks to locally inject Emotion instances.
+For Emotion CSS has a way to create a local instance,
+I have some voodoo tricks to locally inject Emotion instances (per widget).
 See the actual codes for details.
 
 Here are the voodoo tricks in `src/contexts/Emotion.jsx`:
@@ -154,7 +154,7 @@ that I highly recommend reading.
 It describes with good examples how to use `createSignal` and `createStore`,
 and I would say this post is way better than official documentations!
 
-### Issue on Context Providers
+### Issues on Context Providers
 
 Instead of using ordinary SolidJS, the sample uses [solid-element](https://github.com/solidjs/solid/tree/main/packages/solid-element).
 It allows you to easily register SolidJS apps as Web Components.
@@ -170,6 +170,74 @@ Moreover, one of the major drawbacks following the way of `component-register` i
 (where `element` is the Shadow Root for the Web Component you register).
 For instance, I can not create Emotion instances for my Shadow Roots.
 So, instead of the way of `component-register`, I follow the oridinary SolidJS way for my Emotion provider.
+
+### How to Share State Among Web Components?
+Unlike the React example, you may not share state using context providers.
+It is not because of SolidJS, but because widgets here are Web Components
+(where SolidJS app is instantiated per widget).
+So, I'm using _[Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker)_.
+
+Use of _Shared Worker_ is not very difficult.
+Since Webpack 5, it has a worker support,
+and you won't need special loaders for your worker files.
+
+I have [src/widgets/init.js](src/widgets/init.js]:
+
+```js
+const worker = new SharedWorker('./build/widget.solid.worker.js');
+worker.port.start();
+```
+
+As long as I have
+```html
+<script src="build/widget.solid.init.js"></script>
+```
+in HTML pages, it will prepare the worker, and will start listening.
+
+For my other widgets to communicate using the worker,
+I have [WorkerContext](src/contexts/Worker.js)
+in `src/contexts/Worker.js`, and does this:
+
+```js
+setWorker(
+  new SharedWorker(
+    /* webpackChunkName: "worker" */ new URL('@/worker', import.meta.url)
+  )
+);
+```
+
+Once `WorkerContext` is ready, you can use it from anywhere.
+
+```js
+import { useContext, Show } from 'solid-js';
+import { useLanguageWorker } from '@/contexts/Language';
+
+export const Language = props => {
+  const [languageworker, { setLanguage }] = useLanguageWorker();
+
+  const _set_language = (e, lang) => {
+    e.stopPropagation();
+    setLanguage(lang);
+  };
+
+  return (
+    <Show
+      when={languageworker.ready()}
+      fallback={<div></div>}
+    >
+      <img
+        src="images/flag_us.png"
+        onClick={e => _set_language(e, 'en')}
+      />
+
+      <img
+        src="images/flag_jp.png"
+        onClick={e => _set_language(e, 'ja')}
+      />
+    </Show>
+  );
+};
+```
 
 ## Installed NPM Packages
 
