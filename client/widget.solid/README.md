@@ -172,6 +172,7 @@ For instance, I can not create Emotion instances for my Shadow Roots.
 So, instead of the way of `component-register`, I follow the oridinary SolidJS way for my Emotion provider.
 
 ### How to Share State Among Web Components?
+
 Unlike the React example, you may not share state using context providers.
 It is not because of SolidJS, but because widgets here are Web Components
 (where SolidJS app is instantiated per widget).
@@ -189,9 +190,11 @@ worker.port.start();
 ```
 
 As long as I have
+
 ```html
 <script src="build/widget.solid.init.js"></script>
 ```
+
 in HTML pages, it will prepare the worker, and will start listening.
 
 For my other widgets to communicate using the worker,
@@ -221,19 +224,10 @@ export const Language = props => {
   };
 
   return (
-    <Show
-      when={languageworker.ready()}
-      fallback={<div></div>}
-    >
-      <img
-        src="images/flag_us.png"
-        onClick={e => _set_language(e, 'en')}
-      />
+    <Show when={languageworker.ready()} fallback={<div></div>}>
+      <img src="images/flag_us.png" onClick={e => _set_language(e, 'en')} />
 
-      <img
-        src="images/flag_jp.png"
-        onClick={e => _set_language(e, 'ja')}
-      />
+      <img src="images/flag_jp.png" onClick={e => _set_language(e, 'ja')} />
     </Show>
   );
 };

@@ -40,7 +40,7 @@ Enjoy the content, or hope it helps someone out there!
 
 ## 3. Install
 
-For each `server`, `client/widget.react`, and `client/widget.solid`, run `npm install` within the folders.
+For each `server`, `client/widget.react`, and `client/widget.solid`, run `npm install`.
 
 ## 4. Run
 
