@@ -182,7 +182,7 @@ Use of _Shared Worker_ is not very difficult.
 Since Webpack 5, it has a worker support,
 and you won't need special loaders for your worker files.
 
-I have [src/widgets/init.js](src/widgets/init.js]:
+I have `src/widgets/init.js`:
 
 ```js
 const worker = new SharedWorker('./build/widget.solid.worker.js');
@@ -209,7 +209,8 @@ setWorker(
 );
 ```
 
-Once `WorkerContext` is ready, you can use it from anywhere.
+Once `WorkerContext` is ready, you can use it from anywhere.  
+In `src/components/language.jsx`:
 
 ```js
 import { useContext, Show } from 'solid-js';
