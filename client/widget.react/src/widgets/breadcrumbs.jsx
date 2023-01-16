@@ -41,7 +41,7 @@ const Breadcrumbs = ({ dataset }) => {
     <div id="breadcrumbs-content" css={styles.content}>
       {lastindex > -1 &&
         breadcrumbs.map((bread, i) => {
-          const { link, text } = bread;
+          const [text, link] = bread;
           const show = i < lastindex;
 
           return link ? (

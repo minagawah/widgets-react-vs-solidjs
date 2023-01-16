@@ -76,7 +76,7 @@ const Breadcrumbs = props => {
       {(({ cx, css }) => (
         <nav id="breadcrumbs-content" className={cx(styles().content)}>
           {breadcrumbs().map((bread, i) => {
-            const { link, text } = bread;
+            const [text, link] = bread;
             const show = i < lastindex();
 
             return link ? (
