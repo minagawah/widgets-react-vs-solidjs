@@ -33,7 +33,7 @@ So, here are the NPM packages installed for CSS bundling:
 npm install --save tailwindcss postcss autoprefixer
 
 # devDependencies
-npm install --save-dev postcss-cli postcss-preset-env
+npm install --save-dev postcss-cli postcss-preset-env postcss-mixins
 ```
 
 and I have the following simple command for NPM script (in `package.json`):
@@ -47,8 +47,10 @@ In `postcss.config.js`, I have the following:
 ```js
 module.exports = {
   plugins: {
+    'tailwindcss/nesting': {},
     tailwindcss: {},
     autoprefixer: {},
+    'postcss-mixins': {},
     'postcss-preset-env': {
       stage: 2, // default
       features: {
@@ -60,17 +62,23 @@ module.exports = {
 };
 ```
 
-Notice it is enabling "nesting-rulees" and "custom-media-queries" so that I can have an expressions for media queries:
+Notice `postcss-mixins` allows me to use `@mixin` syntax to compose CSS classes:
 
 ```css
-.generic-content-wrapper {
+@define-mixin generic-content-wrapper {
   width: 94%;
   @media (min-width: 768px) {
     width: 85%;
     max-width: 1024px;
   }
 }
+
+.generic-content-wrapper {
+  @mixin generic-content-wrapper;
+}
 ```
+
+Also, notice the settings above enables "nesting-rulees" and "custom-media-queries" so that I can have an expressions for media queries.
 
 For `tailwind.config.js`, I have the following:
 
@@ -99,6 +107,7 @@ Notice that I need to specify the path to my HTML files.
 - http-server
 - postcss-cli
 - postcss-preset-env
+- postcss-mixins
 - nodemon
 - concurrently
 - prettier
@@ -106,5 +115,5 @@ Notice that I need to specify the path to my HTML files.
 ```shell
 npm install --save  tailwindcss postcss autoprefixer
 
-npm install --save-dev http-server postcss-cli postcss-preset-env nodemon concurrently prettier
+npm install --save-dev http-server postcss-cli postcss-preset-env postcss-mixins nodemon concurrently prettier
 ```

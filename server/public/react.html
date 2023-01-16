@@ -17,32 +17,41 @@
       >
     </noscript>
 
-    <!--
-         On Saturday, October 26, 1985, 1:35 AM,
-         Marty McFly goes back in time, and
-         arrives at the future Peabody Farm
-         on Saturday, November 5, 1955, 6:15 am.
-    -->
-    <header
-      id="header"
-      data-datetime="1985-10-26 01:35:00"
-      class="w-full"
-    ></header>
+    <div id="header-wrapper">
+      <header id="header">
+        <div id="header-content-left">
+          <a id="title-link" href="/">
+            <h1>Sample</h1>
+          </a>
+        </div>
 
-    <div
-      id="breadcrumbs"
-      data-breadcrumbs='[{ "text": "Home", "link": "./index.html" }, { "text": "Widgets (React)" }]'
-      class="w-full"
-    ></div>
+        <div id="header-content-right">
+          <!--
+               On Saturday, October 26, 1985, 1:35 AM,
+               Marty McFly goes back in time, and
+               arrives at the future Peabody Farm
+               on Saturday, November 5, 1955, 6:15 am.
+          -->
+          <div data-language data-datetime="1985-10-26 01:35:00"></div>
+        </div>
 
-    <div
-      id="container"
-      class="w-full flex flex-col justify-start items-center bg-gray-200"
-    >
-      <div
-        id="content"
-        class="generic-content-wrapper flex flex-col justify-start items-start px-4 pt-4 pb-16 font-serif text-xl"
-      >
+        <div id="header-content-bottom"></div>
+      </header>
+    </div>
+
+    <div id="breadcrumbs-wrapper-wrapper">
+      <div id="breadcrumbs-wrapper">
+        <div
+          id="breadcrumbs"
+          data-breadcrumbs='[{ "text": "Home", "link": "./index.html" }, { "text": "Widgets (React)" }]'
+        >
+          Home &gt;
+        </div>
+      </div>
+    </div>
+
+    <div id="main-content-wrapper">
+      <div id="main-content">
         <h1 data-lang data-lang-ja="(React) ファウスト「悲壮劇の第一部」" class="mt-4 font-bold text-5xl">(React) FAUST "FIRST PART OF THE TRAGEDY"</h1>
 
         <div class="text-gray-500 text-2xl">
@@ -92,14 +101,16 @@ And rummage in empty words no more!
       </div>
     </div>
 
-    <footer id="footer" class="w-full"></footer>
+    <div id="footer-wrapper">
+      <footer id="footer"></footer>
+    </div>
 
     <script src="build/widget.react.runtime.js"></script>
     <script src="build/widget.react.vendor.js"></script>
     <script src="build/widget.react.init.js"></script>
-    <script src="build/widget.react.header.js"></script>
-    <script src="build/widget.react.footer.js"></script>
     <script src="build/widget.react.breadcrumbs.js"></script>
+    <script src="build/widget.react.language.js"></script>
     <script src="build/widget.react.translate.js"></script>
+    <script src="build/widget.react.footer.js"></script>
   </body>
 </html>

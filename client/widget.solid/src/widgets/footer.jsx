@@ -6,42 +6,24 @@ import tw from 'twin.macro';
 
 import { EmotionContext, EmotionProvider } from '@/contexts/Emotion';
 import { LanguageContext, LanguageProvider } from '@/contexts/Language';
-
-import * as TW_CUSTOM_COLORS from '../../../../tw.colors';
+import { createSharedStyles } from '@/styles';
 
 const createStyles = ({ css }) => {
-  const shared = {
-    linkStyle: css`
-      display: block;
-      &,
-      &:link,
-      &:visited {
-        text-decoration: underline;
-        color: ${TW_CUSTOM_COLORS['tomato-dark']};
-      }
-      &:hover,
-      &:active {
-        text-decoration: underline;
-        color: ${TW_CUSTOM_COLORS['tomato-light']};
-      }
-    `,
-    input: css`
-      ${tw`
-        px-2 py-2 rounded
-        border border-solid border-gray-300
-        shadow-inner drop-shadow-2xl text-xl
-      `}
-    `,
-  };
+  const shared = createSharedStyles({ css, list: ['linkStyle', 'input'] });
 
   return {
-    wrapper: css(tw`w-full px-4 py-6 bg-gray-700`),
+    container: css`
+      ${tw`w-full flex flex-col justify-center items-center`}
+    `,
     content: css`
       ${tw`
         w-full flex flex-col justify-center items-center
         md:flex-row md:justify-center md:items-center
         text-xl
       `}
+    `,
+    content2: css`
+      ${tw`w-full flex flex-col justify-center items-center`}
     `,
     link: css`
       ${shared.linkStyle}
@@ -53,23 +35,14 @@ const createStyles = ({ css }) => {
         visited:text-white visited:no-underline
       `}
     `,
-    content2: css`
-      ${tw`w-full flex flex-col justify-center items-center`}
-      input {
-        ${shared.input}
-        ${tw`mt-3 block px-1 py-2 bg-gray-300 text-center`}
-      }
-    `,
   };
 };
 
 export const Footer = props => {
   const [emotion] = useContext(EmotionContext);
+  const [styles, setStyles] = createStore(null);
   const [language] = useContext(LanguageContext);
   const [breadcrumbs, setBreadcrumbs] = createStore([]);
-  const [styles, setStyles] = createStore(null);
-
-  // const { innerHTML } = props?.element || {};
 
   createEffect(() => {
     if (emotion()) {
@@ -80,7 +53,7 @@ export const Footer = props => {
   return (
     <Show when={emotion() && styles && language()} fallback={<div></div>}>
       {(({ cx }) => (
-        <div id="footer-content-wrapper" className={cx(styles.wrapper)}>
+        <div id="footer-container" className={cx(styles.container)}>
           <div id="footer-content" className={cx(styles.content)}>
             <a href="./index.html" className={cx(styles.link)}>
               Home
@@ -93,7 +66,9 @@ export const Footer = props => {
             </a>
           </div>
 
-          <div id="footer-content2" className={cx(styles.content2)}></div>
+          <div id="footer-content2" className={cx(styles.content2)}>
+            <slot name="footer-input-spyware"></slot>
+          </div>
         </div>
       ))(emotion())}
     </Show>
@@ -104,12 +79,10 @@ compose(
   register('footer-widget'),
   withSolid
 )((props, options) => {
-  const element = options?.element;
-
   return (
     <LanguageProvider>
-      <EmotionProvider key="footer-widget" element={element}>
-        <Footer element={element} {...props} />
+      <EmotionProvider key="footer" element={options?.element}>
+        <Footer {...props} />
       </EmotionProvider>
     </LanguageProvider>
   );

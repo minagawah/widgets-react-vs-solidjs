@@ -4,7 +4,6 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     init: './src/widgets/init.js',
-    header: './src/widgets/header.jsx',
     footer: './src/widgets/footer.jsx',
     breadcrumbs: './src/widgets/breadcrumbs.jsx',
     language: './src/widgets/language.jsx',

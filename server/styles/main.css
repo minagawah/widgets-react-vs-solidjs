@@ -97,14 +97,98 @@ a:active {
   @apply block px-5 py-2 rounded-lg cursor-pointer border-0 drop-shadow-2xl text-center font-bold text-lg bg-gray-200;
 }
 
-.input {
-  @apply px-2 py-2 rounded border border-solid border-gray-300 shadow-inner drop-shadow-2xl text-xl;
-}
-
-.generic-content-wrapper {
+@define-mixin generic-content-wrapper {
   width: 94%;
   @media (min-width: 768px) {
     width: 85%;
     max-width: 1024px;
   }
+}
+
+.generic-content-wrapper {
+  @mixin generic-content-wrapper;
+}
+
+#header-wrapper {
+  @apply w-full box-border flex flex-col justify-start items-center bg-gray-200;
+}
+
+#header {
+  @mixin generic-content-wrapper;
+  box-sizing: border-box;
+  @apply pt-2 pb-2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 1px;
+  border-bottom: 1px solid #d6d6d6;
+}
+
+#header-content-left {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  @apply pl-4 flex flex-row justify-start items-center;
+}
+
+#title-link {
+  display: inline-block;
+  @apply text-gray-900;
+  h1 {
+    @apply font-bold text-xl;
+  }
+}
+
+#header-title-link:link,
+#header-title-link:hover,
+#header-title-link:visited {
+  @apply text-gray-900 no-underline;
+}
+
+#header-content-right {
+  grid-column: 2 / -1;
+  grid-row: 1 / 2;
+  @apply pr-4 flex flex-row justify-end items-center;
+}
+
+#header-content-bottom {
+  grid-column: 1 / -1;
+  grid-row: 2 / -1;
+  @apply flex flex-col justify-center items-center;
+}
+
+#breadcrumbs-wrapper-wrapper {
+  @apply w-full box-border flex flex-col justify-start items-center bg-gray-200;
+}
+
+#breadcrumbs-wrapper {
+  @mixin generic-content-wrapper;
+  box-sizing: border-box;
+  @apply px-4 py-1 flex flex-row justify-start items-center;
+  border-bottom: 1px solid #d6d6d6;
+}
+
+#breadcrumbs {
+  @apply w-full text-xl;
+}
+
+#main-content-wrapper {
+  @apply w-full flex flex-col justify-start items-center bg-gray-200;
+}
+
+#main-content {
+  @mixin generic-content-wrapper;
+  @apply px-4 pt-4 pb-16 font-serif;
+}
+
+#footer-wrapper {
+  @apply w-full box-border flex flex-col justify-center items-center px-4 py-6 bg-gray-700;
+}
+
+#footer {
+  @mixin generic-content-wrapper;
+  @apply text-xl;
+}
+
+#footer-input {
+  @apply px-2 py-2 rounded border border-solid border-gray-300 shadow-inner drop-shadow-2xl text-xl;
+  @apply mt-3 block px-1 py-2 bg-gray-300 text-center;
 }

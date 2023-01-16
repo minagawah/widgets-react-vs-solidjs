@@ -22,13 +22,6 @@ I thought of writing them without any JS frameworks.
 It could become much faster.  
 Give me your thoughts on this.
 
-You may also notice the page is a bit shakey;
-for widgets appear after about 1 second.
-This is due to the widgets replacing DOM elements, giving height for each element.
-I could have improved if I combined several widgets into 1
-(then, it would be no different from ordinary SPA...).
-Or, I could apply some transition animations.
-
 ## 2. Settings
 
 As I mentioned, it is more about using Emotion CSS and Tailwind CSS.  

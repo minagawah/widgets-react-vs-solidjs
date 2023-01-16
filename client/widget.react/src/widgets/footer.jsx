@@ -2,16 +2,21 @@ import React from 'react';
 import tw, { css } from 'twin.macro';
 
 import { run } from '@/lib/service';
-import { linkStyle } from '@/styles';
+import { linkStyle, inputStyle } from '@/styles';
 
 const styles = {
-  wrapper: tw`
-    w-full px-4 py-6 bg-gray-700
-  `,
+  container: tw`w-full flex flex-col justify-center items-center`,
   content: tw`
     w-full flex flex-col justify-center items-center
     md:flex-row md:justify-center md:items-center
     text-xl
+  `,
+  content2: css`
+    ${tw`w-full flex flex-col justify-center items-center`}
+    input {
+      ${inputStyle}
+      ${tw`mt-3 block px-1 py-2 bg-gray-300 text-center`}
+    }
   `,
   link: css`
     ${linkStyle}
@@ -23,14 +28,11 @@ const styles = {
       visited:text-white visited:no-underline
     `}
   `,
-  content2: tw`
-    w-full flex flex-col justify-center items-center
-  `,
 };
 
 export const Footer = ({ innerHTML, styles: extra }) => {
   return (
-    <div id="footer-content-wrapper" css={styles.wrapper}>
+    <div id="footer-container" css={styles.container}>
       <div id="footer-content" css={styles.content}>
         <a href="./index.html" css={styles.link}>
           Home
@@ -43,7 +45,6 @@ export const Footer = ({ innerHTML, styles: extra }) => {
         </a>
       </div>
 
-      {/*
       {!!innerHTML && (
         <div
           id="footer-content2"
@@ -51,9 +52,6 @@ export const Footer = ({ innerHTML, styles: extra }) => {
           css={styles.content2}
         ></div>
       )}
-        */}
-
-      <div id="footer-content2" css={styles.content2}></div>
     </div>
   );
 };

@@ -61,7 +61,6 @@ export const EmotionProvider = props => {
 
   createEffect(() => {
     const { shadowRoot: container } = element || {};
-
     if (container) {
       // Creating the instance
       const emo = createEmotion({ key, container });
@@ -82,27 +81,32 @@ In `src/widgets/header.jsx`, asking `EmotionContext` to create the instance:
 ```js
 import { register, compose } from 'component-register';
 import { withSolid } from 'solid-element';
-import { useContext, createEffect, Show } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import {
+  useContext,
+  createSignal,
+  createEffect,
+  createMemo,
+  Show,
+} from 'solid-js';
 import tw from 'twin.macro';
 
 import { EmotionContext, EmotionProvider } from '@/contexts/Emotion';
+import { createSharedStyles } from '@/styles';
 
 const createStyles = ({ css }) => {
   return {
-    container: css`
+    content: css`
       ${tw`
-        w-full box-border
-        flex flex-col justify-start items-center
-        bg-gray-200
+        w-full flex flex-row justify-start items-center
+        text-xl font-bold text-gray-900
       `}
     `,
   };
 };
 
-const Header = props => {
+const Breadcrumbs = props => {
   const [emotion] = useContext(EmotionContext);
-  const [styles, setStyles] = createStore(null);
+  const [styles, setStyles] = createSignal(null);
 
   createEffect(() => {
     if (emotion()) {
@@ -111,28 +115,27 @@ const Header = props => {
   });
 
   return (
-    <Show when={emotion() && styles} fallback={<div></div>}>
-      {(({ cx }) => (
-        <div className={cx(styles.container)}>
-          {...}
-        </div>
+    <Show when={emotion() && styles()} fallback={<div></div>}>
+      {(({ cx, css }) => (
+        <nav id="breadcrumbs-content" className={cx(styles().content)}>
+          <div>{...}</div>
+        </nav>
       ))(emotion())}
     </Show>
   );
 };
 
 compose(
-  register('header-widget'),
+  register('breadcrumbs-widget'),
   withSolid
 )((props, options) => {
+  const element = options?.element;
   return (
-    <WorkerProvider>
-      <LanguageProvider>
-        <EmotionProvider key="header-widget" element={options?.element}>
-          <Header {...props} />
-        </EmotionProvider>
-      </LanguageProvider>
-    </WorkerProvider>
+    <LanguageProvider>
+      <EmotionProvider key="breadcrumbs" element={element}>
+        <Breadcrumbs element={element} {...props} />
+      </EmotionProvider>
+    </LanguageProvider>
   );
 });
 ```

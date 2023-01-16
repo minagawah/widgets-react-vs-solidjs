@@ -1,6 +1,5 @@
 import { useContext, createSignal, createEffect, Show, on } from 'solid-js';
-import { createStore } from 'solid-js/store';
-import tw from 'twin.macro';
+// import tw from 'twin.macro';
 
 import { EmotionContext } from '@/contexts/Emotion';
 import { useLanguageWorker } from '@/contexts/Language';
@@ -9,7 +8,7 @@ const createStyles = ({ css }) => {
   return {
     base: css`
       display: inline-block;
-      width: 36px;
+      width: 90px;
     `,
   };
 };
@@ -17,8 +16,7 @@ const createStyles = ({ css }) => {
 export const Language = props => {
   const [languageworker, { setLanguage }] = useLanguageWorker();
   const [emotion] = useContext(EmotionContext);
-  const [styles, setStyles] = createStore(null);
-  const [extra, setExtra] = createStore(null);
+  const [styles, setStyles] = createSignal(null);
 
   const _set_language = (e, lang) => {
     e.stopPropagation();
@@ -28,32 +26,31 @@ export const Language = props => {
   createEffect(() => {
     if (emotion()) {
       setStyles(createStyles(emotion()));
-      props?.styles && setExtra(props.styles);
     }
   });
 
   return (
     <Show
-      when={emotion() && styles && languageworker.ready()}
+      when={emotion() && styles() && languageworker.ready()}
       fallback={<div></div>}
     >
-      {(cx => (
+      {(({ cx }) => (
         <>
           <img
-            id="language-first"
             src="images/flag_us.png"
-            className={cx(styles.base, extra?.base, extra?.first)}
+            class="language-button language-button-first"
+            className={cx(styles().base)}
             onClick={e => _set_language(e, 'en')}
           />
 
           <img
-            id="language-second"
             src="images/flag_jp.png"
-            className={cx(styles.base, extra?.base, extra?.second)}
+            class="language-button language-button-second"
+            className={cx(styles().base)}
             onClick={e => _set_language(e, 'ja')}
           />
         </>
-      ))(emotion().cx)}
+      ))(emotion())}
     </Show>
   );
 };

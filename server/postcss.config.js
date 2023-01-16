@@ -1,7 +1,9 @@
 module.exports = {
   plugins: {
+    'tailwindcss/nesting': {},
     tailwindcss: {},
     autoprefixer: {},
+    'postcss-mixins': {},
     'postcss-preset-env': {
       stage: 2, // default
       features: {
