@@ -1,5 +1,4 @@
-import { register, compose } from 'component-register';
-import { withSolid } from 'solid-element';
+import { customElement } from 'solid-element';
 import {
   useContext,
   createSignal,
@@ -80,6 +79,14 @@ const Translate = props => {
   });
 
   return (
+    <>
+      {/**
+       * Has 'display: none' initially being set
+       * for the widget, however, show it
+       * as the SolidJS app mounts.
+       */}
+      <style>{`:host { display: block !important; }`}</style>
+
     <Show
       when={emotion() && styles() && dict.ready && languageworker.ready()}
       fallback={<div></div>}
@@ -90,15 +97,11 @@ const Translate = props => {
         </div>
       ))(emotion())}
     </Show>
+    </>
   );
 };
 
-compose(
-  register('translate-widget'),
-  withSolid
-)((props, options) => {
-  const element = options?.element;
-
+customElement('translate-widget', {}, (props, { element }) => {
   return (
     <WorkerProvider>
       <LanguageProvider>

@@ -8,6 +8,7 @@ module.exports = {
     breadcrumbs: './src/widgets/breadcrumbs.jsx',
     language: './src/widgets/language.jsx',
     translate: './src/widgets/translate.jsx',
+    translate_content: './src/widgets/translate_content.jsx',
   },
   output: {
     path: path.resolve(__dirname, '../../server/public/build'),

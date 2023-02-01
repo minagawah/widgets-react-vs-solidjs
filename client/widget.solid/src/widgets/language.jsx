@@ -1,5 +1,4 @@
-import { register, compose } from 'component-register';
-import { withSolid } from 'solid-element';
+import { customElement } from 'solid-element';
 import { useContext, createSignal, createEffect, Show } from 'solid-js';
 import moment from 'moment';
 import tw from 'twin.macro';
@@ -60,11 +59,7 @@ const Language = props => {
   );
 };
 
-compose(
-  register('language-widget'),
-  withSolid
-)((props, options) => {
-  const element = options?.element;
+customElement('language-widget', {}, (props, { element }) => {
   return (
     <WorkerProvider>
       <LanguageProvider>

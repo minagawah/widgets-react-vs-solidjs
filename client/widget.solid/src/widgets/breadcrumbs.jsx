@@ -1,5 +1,4 @@
-import { register, compose } from 'component-register';
-import { withSolid } from 'solid-element';
+import { customElement } from 'solid-element';
 import {
   useContext,
   createSignal,
@@ -97,12 +96,7 @@ const Breadcrumbs = props => {
   );
 };
 
-compose(
-  register('breadcrumbs-widget'),
-  withSolid
-)((props, options) => {
-  const element = options?.element;
-
+customElement('breadcrumbs-widget', {}, (props, { element }) => {
   return (
     <LanguageProvider>
       <EmotionProvider key="breadcrumbs" element={element}>

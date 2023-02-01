@@ -76,11 +76,10 @@ export const EmotionProvider = props => {
 };
 ```
 
-In `src/widgets/header.jsx`, asking `EmotionContext` to create the instance:
+In `src/widgets/breadcrumbs.jsx`, asking `EmotionContext` to create the instance:
 
 ```js
-import { register, compose } from 'component-register';
-import { withSolid } from 'solid-element';
+import { customElement } from 'solid-element';
 import {
   useContext,
   createSignal,
@@ -91,7 +90,9 @@ import {
 import tw from 'twin.macro';
 
 import { EmotionContext, EmotionProvider } from '@/contexts/Emotion';
-import { createSharedStyles } from '@/styles';
+import { LanguageContext, LanguageProvider } from '@/contexts/Language';
+
+import { Sep } from '@/components/sep';
 
 const createStyles = ({ css }) => {
   return {
@@ -107,6 +108,10 @@ const createStyles = ({ css }) => {
 const Breadcrumbs = props => {
   const [emotion] = useContext(EmotionContext);
   const [styles, setStyles] = createSignal(null);
+  const [language] = useContext(LanguageContext);
+  const [breadcrumbs, setBreadcrumbs] = createSignal([]);
+
+  const lastindex = createMemo(() => breadcrumbs().length - 1);
 
   createEffect(() => {
     if (emotion()) {
@@ -114,22 +119,49 @@ const Breadcrumbs = props => {
     }
   });
 
+  createEffect(() => {
+    const { dataset } = props?.element || {};
+
+    if (dataset?.breadcrumbs) {
+      try {
+        const arr = JSON.parse(dataset.breadcrumbs);
+        setBreadcrumbs(arr);
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  });
+
   return (
-    <Show when={emotion() && styles()} fallback={<div></div>}>
+    <Show
+      when={emotion() && styles() && language() && lastindex() > -1}
+      fallback={<div></div>}
+    >
       {(({ cx, css }) => (
         <nav id="breadcrumbs-content" className={cx(styles().content)}>
-          <div>{...}</div>
+          {breadcrumbs().map((bread, i) => {
+            const [text, link] = bread;
+            const show = i < lastindex();
+
+            return link ? (
+              <a key={i} href={link}>
+                {text}
+                {show && <Sep />}
+              </a>
+            ) : (
+              <div key={i}>
+                {text}
+                {show && <Sep />}
+              </div>
+            );
+          })}
         </nav>
       ))(emotion())}
     </Show>
   );
 };
 
-compose(
-  register('breadcrumbs-widget'),
-  withSolid
-)((props, options) => {
-  const element = options?.element;
+customElement('breadcrumbs-widget', {}, (props, { element }) => {
   return (
     <LanguageProvider>
       <EmotionProvider key="breadcrumbs" element={element}>
@@ -159,13 +191,40 @@ and I would say this post is way better than official documentations!
 
 ### Issues on Context Providers
 
-Instead of using ordinary SolidJS, the sample uses [solid-element](https://github.com/solidjs/solid/tree/main/packages/solid-element).
-It allows you to easily register SolidJS apps as Web Components.
-However, it could get a bit tricky when adding context providers to your app when using `solid-element`.
-`solid-element` uses
-[component-register](https://github.com/ryansolid/component-register)
-when registering widgets as Web Components.
-It has a utility called `withProvider` which allows you to compose multiple providers at once.
+Instead of ordinary SolidJS, we are using
+[solid-element](https://github.com/solidjs/solid/tree/main/packages/solid-element).
+When registering a custom tag as a web component,
+the sample is using `customElement()` because it is the easiest way.
+
+There is another way of registering web components using `regiser()` provided by 
+[component-register](https://github.com/ryansolid/component-register).
+`solid-element` is using `component-register` under the hood.
+So, whether using `customElement()` or `register()`, it is about the same.
+
+```diff
+-import { customElement } from 'solid-element';
++import { register, compose } from 'component-register';
++import { withSolid } from 'solid-element';
+ import {
+   useContext,
+   createSignal,
+@@ -97,12 +96,7 @@ const Breadcrumbs = props => {
+   );
+ };
+ 
+-customElement('breadcrumbs-widget', {}, (props, { element }) => {
++compose(
++  register('breadcrumbs-widget'),
++  withSolid
++)((props, options) => {
++  const element = options?.element;
++
+```
+
+But, when using `userProvider` (also of `component-register`)
+along with `register`,
+there are certain things you need to watch out for.
+`withProvider` allows you to compose providers.
 However, when you feed providers, the structure for providers are a bit different from that of ordinary SolidJS apps;
 where you usually define an object for context (in SolidJS providers), you need a _function_ for that of `component-register`.
 Drawback is, it currently does not support async tasks at the apps startups (it allows async tasks at app's runtime).

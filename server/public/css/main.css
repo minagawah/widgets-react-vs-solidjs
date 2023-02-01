@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap');
+
 /*
 ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
-*//*
+*/
+
+/*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
@@ -332,6 +336,7 @@ button,
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
+
 :disabled {
   cursor: default;
 }
@@ -365,11 +370,12 @@ video {
 }
 
 /* Make elements with the HTML hidden attribute stay hidden by default */
+
 [hidden] {
   display: none;
 }
 
-*, ::before, ::after {
+*, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -416,7 +422,7 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-::backdrop {
+::backdrop{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -462,100 +468,101 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
-.container {
+.container{
   width: 100%;
 }
-@media (min-width: 640px) {
+@media (min-width: 640px){
 
-  .container {
+  .container{
     max-width: 640px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 768px){
 
-  .container {
+  .container{
     max-width: 768px;
   }
 }
-@media (min-width: 1024px) {
+@media (min-width: 1024px){
 
-  .container {
+  .container{
     max-width: 1024px;
   }
 }
-@media (min-width: 1280px) {
+@media (min-width: 1280px){
 
-  .container {
+  .container{
     max-width: 1280px;
   }
 }
-@media (min-width: 1536px) {
+@media (min-width: 1536px){
 
-  .container {
+  .container{
     max-width: 1536px;
   }
 }
-.mt-20 {
+.mt-20{
   margin-top: 5rem;
 }
-.mt-4 {
+.mt-4{
   margin-top: 1rem;
 }
-.flex {
+.flex{
   display: flex;
 }
-.h-screen {
+.hidden{
+  display: none;
+}
+.h-screen{
   height: 100vh;
 }
-.w-full {
+.w-full{
   width: 100%;
 }
-.flex-col {
+.flex-col{
   flex-direction: column;
 }
-.items-center {
+.items-center{
   align-items: center;
 }
-.justify-start {
+.justify-start{
   justify-content: flex-start;
 }
-.bg-gray-200 {
+.bg-gray-200{
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
-.px-4 {
+.px-4{
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.text-lg {
+.text-lg{
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
-.text-xl {
+.text-xl{
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
-.text-5xl {
+.text-5xl{
   font-size: 3rem;
   line-height: 1;
 }
-.text-2xl {
+.text-2xl{
   font-size: 1.5rem;
   line-height: 2rem;
 }
-.font-bold {
+.font-bold{
   font-weight: 700;
 }
-.text-gray-500 {
+.text-gray-500{
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
-.text-red-400 {
+.text-red-400{
   --tw-text-opacity: 1;
   color: rgb(248 113 113 / var(--tw-text-opacity));
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap');
 
 :root {
   --text-sans-worksans: 'Work Sans',
@@ -610,19 +617,28 @@ code {
     monospace;
 }
 
-h1 {
-  margin-block-start: 0.3em; /* 0.67em */
-  margin-block-end: 0.3em; /* 0.67em */
+h1{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
 }
 
-h2 {
-  margin-block-start: 0.3em; /* 0.83em */
-  margin-block-end: 0.3em; /* 0.83em */
+h2{
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
 }
 
-h3 {
-  margin-block-start: 0.3em; /* 1em */
-  margin-block-end: 0.3em; /* 1em */
+h3{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+h4,
+h5,
+h6{
+  font-weight: 700;
 }
 
 p,
@@ -647,7 +663,7 @@ a:active {
   text-decoration: underline;
 }
 
-.button {
+.button{
   display: block;
   cursor: pointer;
   border-radius: 0.5rem;
@@ -678,7 +694,7 @@ a:active {
 }
   }
 
-#header-wrapper {
+#header-wrapper{
   box-sizing: border-box;
   display: flex;
   width: 100%;
@@ -727,7 +743,7 @@ a:active {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
-#title-link h1 {
+#title-link h1{
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 700;
@@ -735,7 +751,7 @@ a:active {
 
 #header-title-link:link,
 #header-title-link:hover,
-#header-title-link:visited {
+#header-title-link:visited{
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
   text-decoration-line: none;
@@ -760,7 +776,7 @@ a:active {
   justify-content: center;
 }
 
-#breadcrumbs-wrapper-wrapper {
+#breadcrumbs-wrapper-wrapper{
   box-sizing: border-box;
   display: flex;
   width: 100%;
@@ -796,13 +812,13 @@ a:active {
   border-bottom: 1px solid #d6d6d6;
 }
 
-#breadcrumbs {
+#breadcrumbs{
   width: 100%;
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
 
-#main-content-wrapper {
+#main-content-wrapper{
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -832,7 +848,7 @@ a:active {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-#footer-wrapper {
+#footer-wrapper{
   box-sizing: border-box;
   display: flex;
   width: 100%;
@@ -864,7 +880,7 @@ a:active {
   line-height: 1.75rem;
 }
 
-#footer-input {
+#footer-input{
   border-radius: 0.25rem;
   border-width: 1px;
   border-style: solid;

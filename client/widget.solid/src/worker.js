@@ -1,6 +1,6 @@
 const arr = [];
 
-const make_message_handler = port => event => {
+const make_handler = port => event => {
   if (port && event?.data) {
     if (event.data?.action === 'close') {
       port.close();
@@ -20,7 +20,7 @@ onconnect = e => {
     arr.push(port);
 
     // Register an event handler for `onmessage`.
-    port.onmessage = make_message_handler(port);
+    port.onmessage = make_handler(port);
 
     port.start();
   }

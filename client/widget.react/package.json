@@ -1,6 +1,6 @@
 {
   "name": "react-widgets-for-widgets-react-vs-solidjs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
   "description": "React widgets for 'widgets-react-vs-solidjs'",
   "main": "src/widget/init.jsx",
