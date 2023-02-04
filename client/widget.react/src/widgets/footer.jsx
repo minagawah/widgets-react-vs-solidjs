@@ -56,4 +56,4 @@ export const Footer = ({ innerHTML, styles: extra }) => {
   );
 };
 
-run('#footer', <Footer />);
+run('[data-footer]', <Footer />);

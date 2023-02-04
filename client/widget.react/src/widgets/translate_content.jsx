@@ -7,7 +7,7 @@ import { LanguageProvider, useLanguage } from '@/contexts/Language';
 
 const parser = new DOMParser();
 
-const TranslateContent = ({ innerHTML }) => {
+const TranslateContent = ({ wrapper, innerHTML }) => {
   const { language: lang, i18n, t } = useLanguage();
   const [content, setContent] = useState('');
 
@@ -32,6 +32,12 @@ const TranslateContent = ({ innerHTML }) => {
     }
   }, [lang, innerHTML]);
 
+  useEffect(() => {
+    if (content && wrapper) {
+      wrapper.style.display = 'block';
+    }
+  }, [content]);
+
   return (
     !!content && (
       <span
@@ -42,8 +48,4 @@ const TranslateContent = ({ innerHTML }) => {
   );
 };
 
-run_all(
-  '[data-translate-content]',
-  <TranslateContent />,
-  [[LanguageProvider]]
-);
+run_all('[data-translate-content]', <TranslateContent />, [[LanguageProvider]]);

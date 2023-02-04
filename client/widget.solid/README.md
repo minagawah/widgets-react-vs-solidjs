@@ -196,7 +196,7 @@ Instead of ordinary SolidJS, we are using
 When registering a custom tag as a web component,
 the sample is using `customElement()` because it is the easiest way.
 
-There is another way of registering web components using `regiser()` provided by 
+There is another way of registering web components using `regiser()` provided by
 [component-register](https://github.com/ryansolid/component-register).
 `solid-element` is using `component-register` under the hood.
 So, whether using `customElement()` or `register()`, it is about the same.
@@ -211,7 +211,7 @@ So, whether using `customElement()` or `register()`, it is about the same.
 @@ -97,12 +96,7 @@ const Breadcrumbs = props => {
    );
  };
- 
+
 -customElement('breadcrumbs-widget', {}, (props, { element }) => {
 +compose(
 +  register('breadcrumbs-widget'),

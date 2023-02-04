@@ -18,6 +18,7 @@ const _create_React = (wrapper, _children, _providers = []) => {
   const children = React.Children.map(_children, child =>
     React.isValidElement(child)
       ? React.cloneElement(child, {
+          wrapper,
           dataset: wrapper.dataset,
           innerHTML: wrapper.innerHTML,
         })

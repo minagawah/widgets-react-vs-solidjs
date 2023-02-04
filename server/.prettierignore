@@ -2,8 +2,8 @@
 .prettierignore
 /bin
 /node_modules
-/public
-/worker
+/public/build
+/public/css
 package-lock.json
 *.log
 *.lock

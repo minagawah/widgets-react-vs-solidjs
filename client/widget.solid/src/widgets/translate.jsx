@@ -87,16 +87,16 @@ const Translate = props => {
        */}
       <style>{`:host { display: block !important; }`}</style>
 
-    <Show
-      when={emotion() && styles() && dict.ready && languageworker.ready()}
-      fallback={<div></div>}
-    >
-      {(({ cx }) => (
-        <div class="translate-content" className={cx(styles().content)}>
-          {dict[language()]}
-        </div>
-      ))(emotion())}
-    </Show>
+      <Show
+        when={emotion() && styles() && dict.ready && languageworker.ready()}
+        fallback={<div></div>}
+      >
+        {(({ cx }) => (
+          <div class="translate-content" className={cx(styles().content)}>
+            {dict[language()]}
+          </div>
+        ))(emotion())}
+      </Show>
     </>
   );
 };

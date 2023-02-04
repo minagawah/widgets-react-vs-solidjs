@@ -25,9 +25,9 @@ const Breadcrumbs = ({ dataset }) => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    if (dataset?.breadcrumbs) {
+    if (dataset?.breadcrumbsData) {
       try {
-        const arr = JSON.parse(dataset.breadcrumbs);
+        const arr = JSON.parse(dataset.breadcrumbsData);
         setBreadcrumbs(arr);
       } catch (err) {
         console.warn(err);
@@ -60,4 +60,4 @@ const Breadcrumbs = ({ dataset }) => {
   );
 };
 
-run('#breadcrumbs', <Breadcrumbs />);
+run('[data-breadcrumbs]', <Breadcrumbs />);
