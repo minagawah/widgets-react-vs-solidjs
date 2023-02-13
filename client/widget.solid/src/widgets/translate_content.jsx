@@ -12,8 +12,7 @@ import tw from 'twin.macro';
 
 import { capitalize, decode } from '@/lib/utils';
 import { EmotionContext, EmotionProvider } from '@/contexts/Emotion';
-import { WorkerProvider } from '@/contexts/Worker';
-import { LanguageProvider, useLanguageWorker } from '@/contexts/Language';
+import { LanguageProvider, LanguageContext } from '@/contexts/Language';
 
 const createStyles = ({ css }) => {
   return {
@@ -26,10 +25,9 @@ const createStyles = ({ css }) => {
 const TranslateContent = props => {
   const [emotion] = useContext(EmotionContext);
   const [styles, setStyles] = createSignal(null);
-  const [languageworker] = useLanguageWorker();
+  const [language] = useContext(LanguageContext);
 
   const { dataset } = props?.element || {};
-  const language = createMemo(() => languageworker.language());
 
   createEffect(() => {
     if (emotion()) {
@@ -50,7 +48,7 @@ const TranslateContent = props => {
       <style>{`:host { display: block !important; }`}</style>
 
       <Show
-        when={emotion() && styles() && language() && languageworker.ready()}
+        when={emotion() && styles() && language() && language()}
         fallback={<div></div>}
       >
         {(({ cx }) => (
@@ -65,12 +63,10 @@ const TranslateContent = props => {
 
 customElement('translate-content-widget', {}, (props, { element }) => {
   return (
-    <WorkerProvider>
-      <LanguageProvider>
-        <EmotionProvider key="translate-content" element={element}>
-          <TranslateContent element={element} {...props} />
-        </EmotionProvider>
-      </LanguageProvider>
-    </WorkerProvider>
+    <LanguageProvider>
+      <EmotionProvider key="translate-content" element={element}>
+        <TranslateContent element={element} {...props} />
+      </EmotionProvider>
+    </LanguageProvider>
   );
 });

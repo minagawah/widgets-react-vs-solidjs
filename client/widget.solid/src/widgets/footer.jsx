@@ -5,7 +5,7 @@ import { createStore } from 'solid-js/store';
 import tw from 'twin.macro';
 
 import { EmotionContext, EmotionProvider } from '@/contexts/Emotion';
-import { LanguageContext, LanguageProvider } from '@/contexts/Language';
+import { LanguageProvider, LanguageContext } from '@/contexts/Language';
 import { createSharedStyles } from '@/styles';
 
 const createStyles = ({ css }) => {

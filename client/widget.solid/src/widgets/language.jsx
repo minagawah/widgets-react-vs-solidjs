@@ -4,7 +4,6 @@ import moment from 'moment';
 import tw from 'twin.macro';
 
 import { EmotionContext, EmotionProvider } from '@/contexts/Emotion';
-import { WorkerProvider } from '@/contexts/Worker';
 import { LanguageProvider } from '@/contexts/Language';
 import { Language as LanguageComponent } from '@/components/language';
 
@@ -61,12 +60,10 @@ const Language = props => {
 
 customElement('language-widget', {}, (props, { element }) => {
   return (
-    <WorkerProvider>
-      <LanguageProvider>
-        <EmotionProvider key="language" element={element}>
-          <Language element={element} {...props} />
-        </EmotionProvider>
-      </LanguageProvider>
-    </WorkerProvider>
+    <LanguageProvider>
+      <EmotionProvider key="language" element={element}>
+        <Language element={element} {...props} />
+      </EmotionProvider>
+    </LanguageProvider>
   );
 });

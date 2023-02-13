@@ -7,7 +7,6 @@ import {
 } from 'solid-js';
 import { omit } from 'ramda';
 
-import { WorkerContext } from '@/contexts/Worker';
 import { useCookie } from '@/hooks/useCookie';
 
 // ----------------------
@@ -29,13 +28,34 @@ export const LanguageProvider = props => {
   const [cookie, setCookie] = useCookie('locale', 'en');
   const [language, setLanguage] = createSignal(cookie || 'en');
 
-  const value = [
-    language,
-    {
-      setLanguage(lang) {
-        setLanguage(lang);
-        setCookie(lang);
+  const _set_language = lang => {
+    window.PubSub.publish('language', {
+      payload: {
+        language: lang,
       },
+    });
+  };
+
+  const _onmessage = (msg, data) => {
+    const lang = data?.payload?.language;
+    if (msg && msg === 'language' && lang) {
+      setLanguage(lang);
+      setCookie(lang);
+    }
+  };
+
+  createEffect(() => {
+    window.PubSub.subscribe('language', _onmessage);
+  });
+
+  onCleanup(() => {
+    window.PubSub.unsubscribe('language');
+  });
+
+  const value = [
+    language(),
+    {
+      setLanguage: _set_language,
     },
   ];
 
@@ -44,52 +64,4 @@ export const LanguageProvider = props => {
       {props.children}
     </LanguageContext.Provider>
   );
-};
-
-export const useLanguageWorker = _origin => {
-  const [worker] = useContext(WorkerContext);
-  const [language, { setLanguage }] = useContext(LanguageContext);
-  const [ready, setReady] = createSignal(false);
-
-  const _set_language = lang => {
-    worker().port.postMessage({
-      action: 'language',
-      origin: _origin,
-      payload: {
-        language: lang,
-      },
-    });
-  };
-
-  const _onmessage = event => {
-    const { action, payload } = event?.data || {};
-    if (!!action && !!payload) {
-      if (action === 'language' && !!payload.language) {
-        setLanguage(payload.language);
-      }
-    }
-  };
-
-  createEffect(() => {
-    if (!!worker() && !worker().port.onmessage) {
-      worker().port.onmessage = _onmessage;
-      setReady(true);
-    }
-  });
-
-  onCleanup(() => {
-    if (!!worker()) {
-      worker().port.onmessage = undefined;
-      setReady(false);
-    }
-  });
-
-  return [
-    {
-      language: language(),
-      worker: worker(),
-      ready,
-    },
-    { setLanguage: _set_language },
-  ];
 };

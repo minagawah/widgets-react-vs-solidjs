@@ -1,6 +1,6 @@
 {
   "name": "solidjs-widgets-for-widgets-react-vs-solidjs",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": false,
   "description": "SolidJS widgets for 'widgets-react-vs-solidjs'",
   "main": "src/widget/init.jsx",
@@ -32,6 +32,7 @@
     "core-js": "^3.27.1",
     "js-cookie": "^3.0.1",
     "moment": "^2.29.4",
+    "pubsub-js": "^1.9.4",
     "ramda": "^0.28.0",
     "sanitize-html": "^2.8.1",
     "solid-element": "^1.6.3",

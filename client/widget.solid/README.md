@@ -238,17 +238,20 @@ So, instead of the way of `component-register`, I follow the oridinary SolidJS w
 Unlike the React example, you may not share state using context providers.
 It is not because of SolidJS, but because widgets here are Web Components
 (where SolidJS app is instantiated per widget).
-So, I'm using _[Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker)_.
 
-Use of _Shared Worker_ is not very difficult.
-Since Webpack 5, it has a worker support,
-and you won't need special loaders for your worker files.
+To solve the issue, I initially used
+_[Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker)_.
+However, later I found _SharedWorker_ is not supported for Android,
+both for Chrome and Opera.
+So, I decided using "pub-sub".
+Specifically, I am using [pubsub-js](https://github.com/mroderick/PubSubJS).
+Nothing very interesting.
+In `init.js`, I am simply exposing `PubSub` module globally as `window.PubSub`.
 
-I have `src/widgets/init.js`:
+`src/widgets/init.js`:
 
 ```js
-const worker = new SharedWorker('./build/widget.solid.worker.js');
-worker.port.start();
+window.PubSub = PubSub;
 ```
 
 As long as I have
@@ -257,41 +260,77 @@ As long as I have
 <script src="build/widget.solid.init.js"></script>
 ```
 
-in HTML pages, it will prepare the worker, and will start listening.
+in HTML pages, all the other widget can access as `window.PubSub`.
+For example, this is how I am using it.
 
-For my other widgets to communicate using the worker,
-I have [WorkerContext](src/contexts/Worker.js)
-in `src/contexts/Worker.js`, and does this:
-
-```js
-setWorker(
-  new SharedWorker(
-    /* webpackChunkName: "worker" */ new URL('@/worker', import.meta.url)
-  )
-);
-```
-
-Once `WorkerContext` is ready, you can use it from anywhere.  
-In `src/components/language.jsx`:
+`src/contexts/language.jsx`:
 
 ```js
-import { useContext, Show } from 'solid-js';
-import { useLanguageWorker } from '@/contexts/Language';
+import {
+  createContext,
+  useContext,
+  createSignal,
+  createEffect,
+  onCleanup,
+} from 'solid-js';
+import { omit } from 'ramda';
 
-export const Language = props => {
-  const [languageworker, { setLanguage }] = useLanguageWorker();
+import { useCookie } from '@/hooks/useCookie';
 
-  const _set_language = (e, lang) => {
-    e.stopPropagation();
-    setLanguage(lang);
+// ----------------------
+// LanguageContext
+// ----------------------
+
+export const LanguageContext = createContext([
+  'en',
+  {
+    setLanguage: () => {},
+  },
+]);
+
+// ----------------------
+// LanguageProvider
+// ----------------------
+
+export const LanguageProvider = props => {
+  const [cookie, setCookie] = useCookie('locale', 'en');
+  const [language, setLanguage] = createSignal(cookie || 'en');
+
+  const _set_language = lang => {
+    window.PubSub.publish('language', {
+      payload: {
+        language: lang,
+      },
+    });
   };
 
-  return (
-    <Show when={languageworker.ready()} fallback={<div></div>}>
-      <img src="images/flag_us.png" onClick={e => _set_language(e, 'en')} />
+  const _onmessage = (msg, data) => {
+    const lang = data?.payload?.language;
+    if (msg && msg === 'language' && lang) {
+      setLanguage(lang);
+      setCookie(lang);
+    }
+  };
 
-      <img src="images/flag_jp.png" onClick={e => _set_language(e, 'ja')} />
-    </Show>
+  createEffect(() => {
+    window.PubSub.subscribe('language', _onmessage);
+  });
+
+  onCleanup(() => {
+    window.PubSub.unsubscribe('language');
+  });
+
+  const value = [
+    language(),
+    {
+      setLanguage: _set_language,
+    },
+  ];
+
+  return (
+    <LanguageContext.Provider value={value} {...omit(['children'], props)}>
+      {props.children}
+    </LanguageContext.Provider>
   );
 };
 ```
@@ -309,6 +348,7 @@ export const Language = props => {
 - sanitize-html
 - axios
 - ramda
+- pubsub-js
 
 ### devDependencies
 
@@ -340,7 +380,7 @@ export const Language = props => {
 - rimraf
 
 ```
-npm install --save core-js solid-element solid-js @emotion/css js-cookie moment sanitize-html axios ramda
+npm install --save core-js solid-element solid-js @emotion/css js-cookie moment sanitize-html axios ramda pubsub-js
 
 npm install --save-dev @babel/core @babel/preset-env regenerator-runtime babel-loader babel-plugin-preval babel-preset-solid babel-plugin-macros webpack webpack-cli file-loader css-loader style-loader postcss-loader @svgr/webpack raw-loader worker-loader autoprefixer html-webpack-plugin mini-css-extract-plugin license-webpack-plugin webpack-bundle-analyzer prettier tailwindcss twin.macro nodemon rimraf
 ```

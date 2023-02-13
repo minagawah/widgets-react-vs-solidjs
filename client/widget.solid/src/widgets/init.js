@@ -1,31 +1,29 @@
 import Cookies from 'js-cookie';
+import PubSub from 'pubsub-js';
 import moment from 'moment';
 
-import { debounce } from '@/lib/utils';
-import { Result } from '@/lib/Result';
+import { debounce, check_support, show_native_error } from '@/lib/utils';
 
-const worker = new SharedWorker('./build/widget.solid.worker.js');
+window.PubSub = PubSub;
 
-if (worker?.port) {
-  worker.port.start();
-
-  // Resize Handler
-  const resize_handler = debounce(() => {
-    worker.port.postMessage({
-      action: 'resize',
-      origin: 'init',
-      payload: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-      },
-    });
-  }, 500);
-
-  window.addEventListener('resize', resize_handler, true);
-  window.setTimeout(resize_handler, 200);
-
-  // Error Handler
-  worker.port.addEventListener('error', e => {
-    console.error('[init]', e);
+const resize_handler = debounce(() => {
+  window.PubSub.publish('resize', {
+    origin: 'init',
+    payload: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    },
   });
-}
+}, 500);
+
+window.addEventListener('resize', resize_handler, true);
+window.setTimeout(resize_handler, 200);
+
+setTimeout(() => {
+  window.PubSub.publish('test', {
+    action: 'test',
+    payload: {
+      message: 'hello',
+    },
+  });
+}, 2000);

@@ -2,7 +2,7 @@ import { useContext, createSignal, createEffect, Show, on } from 'solid-js';
 // import tw from 'twin.macro';
 
 import { EmotionContext } from '@/contexts/Emotion';
-import { useLanguageWorker } from '@/contexts/Language';
+import { LanguageContext } from '@/contexts/Language';
 
 const createStyles = ({ css }) => {
   return {
@@ -14,7 +14,7 @@ const createStyles = ({ css }) => {
 };
 
 export const Language = props => {
-  const [languageworker, { setLanguage }] = useLanguageWorker();
+  const [language, { setLanguage }] = useContext(LanguageContext);
   const [emotion] = useContext(EmotionContext);
   const [styles, setStyles] = createSignal(null);
 
@@ -30,10 +30,7 @@ export const Language = props => {
   });
 
   return (
-    <Show
-      when={emotion() && styles() && languageworker.ready()}
-      fallback={<div></div>}
-    >
+    <Show when={emotion() && styles() && language()} fallback={<div></div>}>
       {(({ cx }) => (
         <>
           <img
